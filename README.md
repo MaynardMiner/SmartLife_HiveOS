@@ -16,8 +16,11 @@ Only these locations are accepted:
 
 ``
 China
+
 America
+
 Europe
+
 India
 ``
 
