@@ -14,7 +14,7 @@ Fill out config.json with your data. Run the script.
 ### Location
 Only these locations are accepted:
 
-``
+```
 China
 
 America
@@ -22,7 +22,7 @@ America
 Europe
 
 India
-``
+```
 
 ### Output
 
