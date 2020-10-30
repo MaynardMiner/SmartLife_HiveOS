@@ -29,7 +29,6 @@ class Device {
     }
 
     [bool] Toggle([bool]$state) {
-        $success = $false;
         $new_state = 0;
         switch ($state) {
             $true { $new_state = 1; }
@@ -50,9 +49,14 @@ class Device {
             }
         }
 
-        $toggle_state = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body
+        try {
+            $toggle_state = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body;
+            return $true;
+        }
+        catch {
+            return $false;
+        }
 
-        return $success
     }
 }
 
@@ -112,7 +116,7 @@ function Get-DeviceList([PSCustomObject]$config) {
     $Get_Devices = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body
 
     [List[device]]$devices = [List[device]]::New();
-    foreach($device in $Get_Devices.payload.devices) {
+    foreach ($device in $Get_Devices.payload.devices) {
         $devices.Add([Device]::New($device));
     }
 
