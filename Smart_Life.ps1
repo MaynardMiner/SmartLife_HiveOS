@@ -16,16 +16,16 @@ class Device {
     [string]$Name;
     [string]$Icon;
     [string]$Id;
-    [string]$dev_type;
-    [string]$ha_type;
+    [string]$Dev_Type;
+    [string]$Ha_Type;
 
     Device([PSCustomObject]$device) {
         $this.Data = [device_data]::new($device.data);
         $this.Name = $device.name;
         $this.Icon = $device.icon;
         $this.Id = $device.id;
-        $this.dev_type = $device.dev_type;
-        $this.ha_type = $device.ha_type;
+        $this.Dev_Type = $device.dev_type;
+        $this.Ha_Type = $device.ha_type;
     }
 
     [bool] Toggle([bool]$state) {
