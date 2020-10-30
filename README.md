@@ -47,8 +47,8 @@ GetType     Method     type GetType()
 Toggle      Method     bool Toggle(bool state)
 ToString    Method     string ToString()
 Data        Property   Device_Data Data {get;set;}
-dev_type    Property   string dev_type {get;set;}
-ha_type     Property   string ha_type {get;set;}
+Dev_Type    Property   string Dev_Type {get;set;}
+Ha_Type     Property   string Ha_Type {get;set;}
 Icon        Property   string Icon {get;set;}
 Id          Property   string Id {get;set;}
 Name        Property   string Name {get;set;}
