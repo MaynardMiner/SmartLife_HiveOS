@@ -11,7 +11,7 @@ contact HiveOS farm through its API, and if any devices are detected as offline:
 
 Fill out config.json with your data. Run the script.
 
-### Location
+### Region
 Only these locations are accepted:
 
 ```
