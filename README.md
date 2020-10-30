@@ -34,7 +34,7 @@ Devices has a method to toggle devices on and off.
 $global:Devices | Get-Member
 ```
 
-```
+``
    TypeName: Device
 
 Name        MemberType Definition
@@ -50,7 +50,7 @@ ha_type     Property   string ha_type {get;set;}
 Icon        Property   string Icon {get;set;}
 Id          Property   string Id {get;set;}
 Name        Property   string Name {get;set;}
-```
+``
 
 
 ```pwsh
