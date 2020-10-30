@@ -31,6 +31,29 @@ Once you have ran the script- The current shell with have the global variable de
 Devices has a method to toggle devices on and off.
 
 ```pwsh
+$global:Devices | Get-Member
+```
+
+```
+   TypeName: Device
+
+Name        MemberType Definition
+----        ---------- ----------
+Equals      Method     bool Equals(System.Object obj)
+GetHashCode Method     int GetHashCode()
+GetType     Method     type GetType()
+Toggle      Method     bool Toggle(bool state)
+ToString    Method     string ToString()
+Data        Property   Device_Data Data {get;set;}
+dev_type    Property   string dev_type {get;set;}
+ha_type     Property   string ha_type {get;set;}
+Icon        Property   string Icon {get;set;}
+Id          Property   string Id {get;set;}
+Name        Property   string Name {get;set;}
+```
+
+
+```pwsh
 ### $true means to turn on
 ### $false means to turn off
 
