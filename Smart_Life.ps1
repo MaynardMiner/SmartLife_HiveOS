@@ -36,7 +36,7 @@ class Device {
             $false { $new_state = 0; }
         }
 
-        $endpoint = $global:Config.url + "auth.do"
+        $endpoint = $global:Config.url + "skill"
         $body = @{
             header  = @{
                 name           = "turnOnOff";
@@ -44,7 +44,7 @@ class Device {
                 payloadVersion = 1;
             };
             payload = @{
-                accessToken = user_info["access_token"];
+                accessToken = $global:config.authorization.access_token;
                 devId       = $this.Id;
                 value       = $new_state
             }
