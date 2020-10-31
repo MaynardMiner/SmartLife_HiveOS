@@ -63,3 +63,15 @@ class Device {
 
     }
 }
+
+Class Worker {
+    [bool]$Online;
+    [string]$Name;
+    [bool]$WasRestarted = $false;
+    [datetime]$Restart_Date;
+
+    Worker($worker) {
+        $this.Online = $worker.stats.online;
+        $this.Name = $worker.name;
+    }
+}

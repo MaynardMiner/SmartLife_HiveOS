@@ -4,6 +4,7 @@ using namespace System.Timers;
 . .\build\Device.ps1;
 . .\build\Config.ps1;
 . .\build\Smart_Life.ps1;
+. .\build\HiveOS.ps1;
 . .\build\Script_Events.ps1;
 
 [IO.Directory]::SetCurrentDirectory($PSScriptRoot);

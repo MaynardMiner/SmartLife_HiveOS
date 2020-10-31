@@ -37,11 +37,14 @@ Class Config : Base_Config {
 
     [string]$Location;
     [string]$Url;
-    [Timer]$Refresh = [Timer]::New();
+    [Timer]$SmartLifeRefresh;
+    [Timer]$HiveOSRefresh;
     [List[Device]]$Devices;
-    [bool]$IsConnected = $false;
+    [bool]$SmartLifeIsConnected = $false;
+    [bool]$HiveOSIsConnected = $false;
     [Auth_Token]$Authorization;
     [String[]]$ErrorList;
+    [List[Worker]]$Workers;
 
     Config() {
         $IsConfig = [IO.File]::Exists("config.json");

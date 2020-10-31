@@ -3,33 +3,47 @@ using namespace System.Timers;
 Class Script_Events {
     static [void] Start() {
         ## Smart Life Auth & Devices
-        $global:Config.Refresh = [Timer]::New();
-        $global:Config.Refresh.Interval = 3600000;
-        $script = [Script_Events]::Auth();
-        $null = Register-ObjectEvent -SourceIdentifier authtime -Action $script -EventName Elapsed -InputObject $global:Config.Refresh
-        $global:Config.Refresh.AutoReset = $false;
-        $global:Config.Refresh.Start()
+        $global:Config.SmartLifeRefresh = [Timer]::New();
+        $global:Config.SmartLifeRefresh.Interval = 3600000;
+        $script = [Script_Events]::SmartLifeAuth();
+        $null = Register-ObjectEvent -SourceIdentifier SmartLifeAuthTimer -Action $script -EventName Elapsed -InputObject $global:Config.SmartLifeRefresh
+        $global:Config.SmartLifeRefresh.AutoReset = $false;
+        $global:Config.SmartLifeRefresh.Start()
         . $script;
 
         ## HiveOS API
-        
+        $global:Config.HiveOSRefresh = [Timer]::New();
+        $global:Config.HiveOSRefresh.Interval = 30000;
+        $script = [Script_Events]::HiveOSAuth();
+        $null = Register-ObjectEvent -SourceIdentifier HiveOSAuthTimer -Action $script -EventName Elapsed -InputObject $global:Config.HiveOSRefresh
+        $global:Config.HiveOSRefresh.AutoReset = $false;
+        $global:Config.HiveOSRefresh.Start()
+        . $script;
     }
 
-    hidden static [scriptblock] Auth() {
+    hidden static [scriptblock] SmartLifeAuth() {
         $script = {
-            $global:Config.Refresh.Stop();
+            $global:Config.SmartLifeRefresh.Stop();
             [Smart_Life]::Begin_Auth();
-            if ($global:Config.IsConnected) {
+            if ($global:Config.SmartLifeIsConnected) {
                 [Smart_Life]::GetDeviceList();
             }
-            if (!$global:Config.IsConnected) {
-                $global:Config.Refresh.Interval = 30000;
-                $global:Config.Refresh.Start();
+            if (!$global:Config.SmartLifeIsConnected) {
+                $global:Config.SmartLifeRefresh.Interval = 30000;
+                $global:Config.SmartLifeRefresh.Start();
                 break;
             }
-            
-            $global:Config.Refresh.Interval = 3600000;
-            $global:Config.Refresh.Start();
+            $global:Config.SmartLifeRefresh.Interval = 3600000;
+            $global:Config.SmartLifeRefresh.Start();
+        }
+        return $script;
+    }
+
+    hidden static [scriptblock] HiveOsAuth() {
+        $script = {
+            $global:Config.HiveOSRefresh.Stop();
+            [HiveOS]::GetWorkers();
+            $global:Config.HiveOSRefresh.Start();
         }
         return $script;
     }

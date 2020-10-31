@@ -14,19 +14,19 @@ Class Smart_Life {
             $authorization = Invoke-RestMethod -Uri $endpoint -ContentType "application/x-www-form-urlencoded" -Method POST -Body $body;
             if ($authorization.responseStatus -eq "error") {
                 Write-Host "Failed to authorize: $($authorization.errorMsg)" -ForegroundColor Red;
-                $global:Config.IsConnected = $false;
+                $global:Config.SmartLifeIsConnected = $false;
                 return;
             }
             $global:Config.Authorization = [Auth_Token]::New($authorization);
         }
         catch {
             Write-Host "Failed To Get Authorization From Smart Life" -ForegroundColor Green;
-            $global:Config.IsConnected = $false;
+            $global:Config.SmartLifeIsConnected = $false;
             return;
         }
 
         Write-Host "Log In Successfull" -ForegroundColor Green;
-        $global:Config.IsConnected = $true;
+        $global:Config.SmartLifeIsConnected = $true;
     }
 
     static [void] GetDeviceList() {
@@ -49,19 +49,20 @@ Class Smart_Life {
             $Get_Devices = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body;
             if($Get_Devices.payload.devices.count -eq 0) {
                 Write-Host "No Devices Found." -ForegroundColor Red;]
-                $global:Config.IsConnected = $false;
+                $global:Config.SmartLifeIsConnected = $false;
                 return;
             }
         }
         catch {
             Write-Host "Error: Failed To Gather Devices!" -ForegroundColor Red;
-            $global:Config.IsConnected = $false;
+            $global:Config.SmartLifeIsConnected = $false;
             return;
         }
+        $global:Config.Devices = [List[Device]]::New();
         foreach ($device in $Get_Devices.payload.devices) {
             $global:Config.Devices.Add([Device]::New($device));
         }
-        $global:Config.IsConnected = $true;
+        $global:Config.SmartLifeIsConnected = $true;
         Write-Host "Device List Gathered!" -ForegroundColor Green;
     }    
 }
