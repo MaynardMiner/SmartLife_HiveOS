@@ -40,7 +40,9 @@ Class Smart_Life {
             payload = @{
                 accessToken = $global:Config.Authorization.Access_Token;
             };
-        } | ConvertTo-Json;
+        }
+
+        $body = [Json]::Set($body)
     
         Write-Host "Gathering Device List And Status..." -ForegroundColor Cyan;
         try {

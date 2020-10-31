@@ -44,7 +44,9 @@ class Device {
                 devId       = $this.Id;
                 value       = $new_state
             }
-        } | ConvertTo-Json;
+        }
+
+        $body = [Json]::Set($body);
 
         try {
             $toggle_state = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body;
