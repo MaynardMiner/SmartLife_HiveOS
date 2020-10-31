@@ -1,5 +1,7 @@
 {
-    "username": "user",
-    "password": "pass",
-    "region": "America"
+    "Username": "user",
+    "Password": "pass",
+    "Region": "America",
+    "Hive_Api_Key": "",
+    "Farm_Id": ""
 }
