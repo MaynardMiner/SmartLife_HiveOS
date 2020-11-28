@@ -19,8 +19,8 @@ if ($global:Config.SmartLifeIsConnected) {
 
 While ($True) {
     ## Connect to smartlife
-    Write-Host "Last Checked Smart Life: $($global:Config.SmartLifeRefresh.Elapsed.TotalSeconds) seconds ago" -Foreground Magenta
-    if ($global:Config.SmartLifeRefresh.Elapsed.Seconds -gt 3600000) {
+    Write-Host "Last Checked Smart Life: $([math]::Round($global:Config.SmartLifeRefresh.Elapsed.TotalSeconds)) seconds ago" -Foreground Magenta
+    if ($global:Config.SmartLifeRefresh.Elapsed.TotalSeconds -gt 3600000) {
         [Smart_Life]::Begin_Auth();
         if ($global:Config.SmartLifeIsConnected) {
             [Smart_Life]::GetDeviceList();
@@ -36,8 +36,8 @@ While ($True) {
     }
 
     ## Check HiveOs
-    Write-Host "Last Checked HiveOS: $($global:Config.HiveOSRefresh.Elapsed.TotalSeconds) seconds ago" -Foreground Magenta
-    if ($global:Config.HiveOSRefresh.Elapsed.Seconds -gt 300) {
+    Write-Host "Last Checked HiveOS: $([math]::Round($global:Config.HiveOSRefresh.Elapsed.TotalSeconds)) seconds ago" -Foreground Magenta
+    if ($global:Config.HiveOSRefresh.Elapsed.TotalSeconds -gt 300) {
         [HiveOS]::GetWorkers();
         if($Global:Config.HiveOSIsConnected) {
             $global:Config.HiveOSRefresh.Restart();
