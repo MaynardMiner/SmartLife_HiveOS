@@ -26,6 +26,8 @@ class Device {
     }
 
     [bool] Toggle([bool]$state) {
+        ### $true means to turn on
+        ### $false means to turn off
         $new_state = 0;
         switch ($state) {
             $true { $new_state = 1; }
@@ -49,7 +51,7 @@ class Device {
         $body = [Json]::Set($body);
 
         try {
-            $toggle_state = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body;
+            $toggle_state = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body -TimeoutSec 10 -ErrorAction Stop;
             if ($toggle_state.header.code -eq "SUCCESS") {
                 return $true;
             }
@@ -67,8 +69,8 @@ class Device {
 Class Worker {
     [bool]$Online;
     [string]$Name;
-    [bool]$WasRestarted = $false;
-    [datetime]$Restart_Date;
+    [int]$Restarts = 0;
+    [datetime]$Restart_Date = [DateTime]::Now;
 
     Worker($worker) {
         $this.Online = $worker.stats.online;

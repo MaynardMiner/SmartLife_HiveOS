@@ -1,5 +1,5 @@
 using namespace newtonsoft.json;
-using namespace System.Timers;
+using namespace System.Diagnostics;
 using namespace System.Collections.Generic;
 
 Class Auth_Token {
@@ -37,20 +37,24 @@ Class Config : Base_Config {
 
     [string]$Location;
     [string]$Url;
-    [Timer]$SmartLifeRefresh;
-    [Timer]$HiveOSRefresh;
+    [Stopwatch]$SmartLifeRefresh;
+    [Stopwatch]$HiveOSRefresh;
     [List[Device]]$Devices;
     [bool]$SmartLifeIsConnected = $false;
     [bool]$HiveOSIsConnected = $false;
     [Auth_Token]$Authorization;
     [String[]]$ErrorList;
-    [List[Worker]]$Workers;
+    [List[Worker]]$Workers = [List[Worker]]::New();
 
     Config() {
+        $this.SmartLifeRefresh = [Stopwatch]::New();
+        $this.SmartLifeRefresh.Restart();
+        $this.HiveOSRefresh = [Stopwatch]::New();
+        $this.HiveOSRefresh.Restart();
         $IsConfig = [IO.File]::Exists("config.json");
-        if($IsConfig) {
-            $this.Devices =  [List[Device]]::New()
-            $file = [Json]::Get("config.json",[Base_Config],$true);
+        if ($IsConfig) {
+            $this.Devices = [List[Device]]::New()
+            $file = [Json]::Get("config.json", [Base_Config], $true);
             $this.Username = $file.Username;
             $this.Password = $file.Password;
             $this.Region = $file.Region;

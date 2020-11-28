@@ -11,7 +11,7 @@ Class Smart_Life {
         
         Write-Host "Logging Into Smart Life..." -ForegroundColor Cyan;
         try {
-            $authorization = Invoke-RestMethod -Uri $endpoint -ContentType "application/x-www-form-urlencoded" -Method POST -Body $body;
+            $authorization = Invoke-RestMethod -Uri $endpoint -ContentType "application/x-www-form-urlencoded" -Method POST -Body $body -TimeoutSec 10 -ErrorAction Stop;
             if ($authorization.responseStatus -eq "error") {
                 Write-Host "Failed to authorize: $($authorization.errorMsg)" -ForegroundColor Red;
                 $global:Config.SmartLifeIsConnected = $false;
@@ -46,7 +46,7 @@ Class Smart_Life {
     
         Write-Host "Gathering Device List And Status..." -ForegroundColor Cyan;
         try {
-            $Get_Devices = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body;
+            $Get_Devices = Invoke-RestMethod -Uri $endpoint -ContentType "application/json" -Method GET -Body $body -TimeoutSec 10 -ErrorAction Stop;
             if($Get_Devices.payload.devices.count -eq 0) {
                 Write-Host "No Devices Found." -ForegroundColor Red;]
                 $global:Config.SmartLifeIsConnected = $false;
