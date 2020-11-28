@@ -13,6 +13,7 @@ Class HiveOS {
             if ($Get_Workers.data.Count -eq 0) {
                 Write-Host "HiveOS API was reached but no data was given" -ForegroundColor Red;
                 $global:Config.HiveOSIsConnected = $false;
+                return;
             }
             foreach ($worker in $Get_Workers.data) {
                 $IsWorker = $global:Config.Workers | Where Name -eq $worker.name;
