@@ -23,7 +23,7 @@ While ($True) {
         [Smart_Life]::Begin_Auth();
         if ($global:Config.SmartLifeIsConnected) {
             [Smart_Life]::GetDeviceList();
-            Write-Host "SmartLife Connected";
+            Write-Host "SmartLife Connected" -Foreground Green;
         }        
     }
 
@@ -51,15 +51,15 @@ While ($True) {
                 if ($time_elapsed -gt 300 -and $worker.Restarts -le 5) {
                     Write-Host "Restarting $($worker.Name)...";
                     Write-Host "Turning off..."
-                    $device.Toggle($false);
+                    $null = $device.Toggle($false);
                     Start-Sleep -S 10
                     Write-Host "Turning on..."
-                    $device.Toggle($true);
+                    $null = $device.Toggle($true);
                     $worker.Restarts++
-                    $worker.Restart_Date = [Datetime]::Now();
+                    $worker.Restart_Date = [Datetime]::Now;
                 }
                 else {
-                    Write-Host "$($worker.name) needs to be restarted, but either 300 seconds hasn't passed or it has been restarted 5 times"
+                    Write-Host "$($worker.name) needs to be restarted, but either 300 seconds hasn't passed or it has been restarted 5 times" -Foreground Yellow
                 }
             }
         }
